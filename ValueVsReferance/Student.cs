@@ -2,6 +2,10 @@
 {
     public class Student
     {
+        public Student()
+        {
+            Console.WriteLine("Student class instance is created.");
+        }
         public int id { get; set; }
         public string name { get; set; }
     }

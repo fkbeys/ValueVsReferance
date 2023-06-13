@@ -1,30 +1,39 @@
 ﻿namespace ValueVsReferance
 {
+
     internal class Program
     {
-
-        static ref int calc(ref int num)
+        static IEnumerable<Student> GetStudents()
         {
-            num = num + 1;
-            return ref num;
+            for (int i = 0; i < 10; i++)
+            {
+
+                if (i > 3)
+                {
+                    yield break;
+                }
+                yield return new Student { id = i, name = $"stu:{i}" };
+
+
+            }
         }
-
-        public static Student ChangeName(Student stu)
-        {
-            //stu=new Student();
-            stu.name = "changed";
-            return new Student { id = 33, name = "xx" };
-        }
-
-
         static void Main(string[] args)
         {
 
-            string a = "a";
-            string b = a;
-            b = "c";
-            Console.WriteLine(a);
-            Console.WriteLine(b);
+            var stus = GetStudents().ToList();
+
+
+
+            var stus = GetStudents().GetEnumerator();
+
+            while (stus.MoveNext())
+            {
+
+                Console.WriteLine(stus.Current.name);
+
+            }
+
+
 
 
 
