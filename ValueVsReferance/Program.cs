@@ -20,7 +20,7 @@
         static void Main(string[] args)
         {
 
-            var stus = GetStudents().ToList();
+           // var stus = GetStudents().ToList();
 
 
 
