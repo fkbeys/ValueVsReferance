@@ -1,41 +1,68 @@
-﻿public class Program
+﻿using System.Text;
+
+public class Program
 {
+    public static (string, string) NumEqualMaker(string a, string b)
+    {
+        int lenA = a.Length;
+        int lenB = b.Length;
+
+        if (lenA > lenB)
+        {
+            int dif = lenA - lenB;
+
+            for (int i = 0; i < dif; i++)
+            {
+                b = "0" + b;
+            }
+        }
+        if (lenB > lenA)
+        {
+            int dif = lenB - lenA;
+
+            for (int i = 0; i < dif; i++)
+            {
+                a = "0" + a;
+            }
+        }
+        return (a, b);
+    }
+
+
     public static void Main()
     {
-        M:
-        Console.ForegroundColor = ConsoleColor.Green;
-        var rand = new Random();
-        int width, height;
-        int[] y;
+        string a = "99";
+        string b = "88";
 
-        width = Console.WindowWidth;
-        height = Console.WindowHeight;
+        StringBuilder sb = new StringBuilder();
+        int hand = 0;
 
-        y = new int[width];
-        for (int x = 0; x < width; ++x)
-            y[x] = rand.Next(height);
+        (a, b) = NumEqualMaker(a, b);
 
-        while (true)
+        for (int i = a.Length - 1; i >= 0; i--)
         {
-            for (int x = 0; x < width; ++x)
+            var numA = a[i].ToString();
+            int.TryParse(numA, out int numintA);
+
+            int.TryParse(b[i].ToString(), out int numintB);
+            var tempResult = numintA + numintB;
+            if (hand > 0)
             {
-
-                Console.SetCursorPosition(x, y[x]);
-                Console.Write((char)('a' + rand.Next(50)));
-
-                if (x < Console.WindowWidth && y[x] < Console.WindowHeight)
-                {
-                    // Print a random character at the current position
-                    Console.SetCursorPosition(x, y[x]);
-                    Console.Write((char)('a' + rand.Next(50)));
-                }
-                y[x] = (y[x] + 1) % height;
-                if (width != Console.WindowWidth)
-                {
-                    goto M;
-                }
+                tempResult += hand;
+                hand = 0;
             }
-            Thread.Sleep(50);
+            if (tempResult > 9)
+            {
+                tempResult = tempResult - 10;
+                hand++;
+            }
+            sb.Append(tempResult);
         }
+        if (hand > 0)
+        {
+            sb.Append(1);
+        }
+        var st = sb.ToString();
+        Console.WriteLine(st.Reverse().ToArray());
     }
 }
