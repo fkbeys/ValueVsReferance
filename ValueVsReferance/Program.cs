@@ -1,42 +1,41 @@
-﻿namespace ValueVsReferance
+﻿public class Program
 {
-
-    internal class Program
+    public static void Main()
     {
-        static IEnumerable<Student> GetStudents()
+        M:
+        Console.ForegroundColor = ConsoleColor.Green;
+        var rand = new Random();
+        int width, height;
+        int[] y;
+
+        width = Console.WindowWidth;
+        height = Console.WindowHeight;
+
+        y = new int[width];
+        for (int x = 0; x < width; ++x)
+            y[x] = rand.Next(height);
+
+        while (true)
         {
-            for (int i = 0; i < 10; i++)
+            for (int x = 0; x < width; ++x)
             {
 
-                if (i > 3)
+                Console.SetCursorPosition(x, y[x]);
+                Console.Write((char)('a' + rand.Next(50)));
+
+                if (x < Console.WindowWidth && y[x] < Console.WindowHeight)
                 {
-                    yield break;
+                    // Print a random character at the current position
+                    Console.SetCursorPosition(x, y[x]);
+                    Console.Write((char)('a' + rand.Next(50)));
                 }
-                yield return new Student { id = i, name = $"stu:{i}" };
-
-
+                y[x] = (y[x] + 1) % height;
+                if (width != Console.WindowWidth)
+                {
+                    goto M;
+                }
             }
-        }
-        static void Main(string[] args)
-        {
-
-           // var stus = GetStudents().ToList();
-
-
-
-            var stus = GetStudents().GetEnumerator();
-
-            while (stus.MoveNext())
-            {
-
-                Console.WriteLine(stus.Current.name);
-
-            }
-
-
-
-
-
+            Thread.Sleep(50);
         }
     }
 }
